@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".OutTrainActivity"
+android:weightSum="10"
+
+    >
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:id="@+id/mapContainer">
+
+            <fragment
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.example.ecofit.MapFragment" />
+
+</FrameLayout>
+
+<LinearLayout
+    android:id="@+id/buttons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/mapContainer"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_margin="10dp"
+    >
+
+    <Button
+        android:id="@+id/startStopButton"
+        android:onClick="startStopTapped"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:text="Start"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+
+    <Button
+        android:id="@+id/resestBtn"
+        android:onClick="resetTapped"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:text="Reset"
+
+        app:srcCompat="@android:drawable/ic_media_pause" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttons"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timerText"
+            android:text="00:00:00"
+            android:textSize="50sp"
+            android:textColor="@color/black"
+            />
+<!--        <Chronometer-->
+<!--            android:id="@+id/chronometer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="60sp"-->
+<!--            android:textColor="@color/black" />-->
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".BiometricsActivity"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="20dp"
+    android:layout_gravity="center"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        app:srcCompat="@drawable/start" />
+
+    <TextView
+        android:id="@+id/orSign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="Would you like to have a greater fitness experience? Let us know you better. It only takes couple of minutes."
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/yesBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
+        android:background="#A56EA5"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Let's go"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:cornerRadius="15dp" />
+
+    <Button
+        android:id="@+id/noBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Thank you, next"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp"
+        app:backgroundTint="@android:color/background_light"
+        app:cornerRadius="15dp"
+        app:strokeColor="@android:color/holo_green_light"
+        app:strokeWidth="2dp" />
+
+</LinearLayout>
