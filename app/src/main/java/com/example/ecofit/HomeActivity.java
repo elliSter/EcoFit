@@ -1,8 +1,7 @@
-package com.example.ecofit;
+  package com.example.ecofit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,17 +9,14 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +43,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private  String userID;
     private Toolbar toolbar;
     ImageView menuIcon;
+
+
 
 
     @Override
@@ -113,11 +111,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.nav_home:
                     selectedFragment=new HomeFragment();
                     break;
+                case R.id.nav_goal:
+                    selectedFragment=new GoalsFragment();
+                    break;
                 case R.id.nav_run:
                     selectedFragment=new OutTrainFragment();
-                    break;
-                case R.id.nav_exercise:
-                    selectedFragment=new InTrainFragment();
                     break;
                 case R.id.nav_stretch:
                     selectedFragment=new StretchFragment();
@@ -206,4 +204,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         documentReference.set(user, SetOptions.merge());
     }
+
+
 }

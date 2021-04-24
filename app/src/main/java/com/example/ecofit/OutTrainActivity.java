@@ -1,20 +1,17 @@
 package com.example.ecofit;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -31,20 +28,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.type.LatLng;
+import com.google.android.gms.maps.model.LatLng;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class OutTrainActivity extends AppCompatActivity {
+public class OutTrainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    SupportMapFragment supportMapFragment;
-    private Chronometer chronometer;
-    private boolean timerRunning;
-    private long pauseOffset = 0;
+    SupportMapFragment mapFragment;
+    GoogleMap  googleMap;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView timerText;
     Button stopStartButton;
@@ -60,77 +52,84 @@ public class OutTrainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_out_train);
 
-        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+        //map
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(OutTrainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            getCurrentLocation();
+        } else {
+            ActivityCompat
+                    .requestPermissions(OutTrainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+
+
+        //timer
         timerText = (TextView) findViewById(R.id.timerText);
         stopStartButton = (Button) findViewById(R.id.startStopButton);
         timer = new Timer();
-        //init fused location
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-//
-//        //check persmission
-//        if (ActivityCompat.checkSelfPermission(OutTrainActivity.this,
-//                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            //when permission granted
-//            getLocation();
-//        } else {
-//            //request permission
-//            ActivityCompat.requestPermissions(OutTrainActivity.this,
-//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-//        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap gMap) {
+        googleMap = gMap;
+        //LatLng latLng = new LatLng(33.6923390,73.055848);
+        getCurrentLocation();
+    }
+
+    private void getCurrentLocation() {
+        //init task location
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(final Location location) {
+                // when success
+                if(location != null){
+                    // sync map
+                    mapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+                            //init lat lng
+
+                            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                            //create marker
+                            MarkerOptions options= new MarkerOptions().position(latLng).title("");
+                            //zoom at the current locantion on Map
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+                            //add marker on map
+                            googleMap.addMarker(options);
+
+                        }
+                    });
+                }
+            }
+        });
 
     }
 
-//    private void getLocation() {
-//        //init task location
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-//        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-//            @Override
-//            public void onSuccess(final Location location) {
-//                // when success
-//                if(location != null){
-//                    // sync map
-//                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-//                        @Override
-//                        public void onMapReady(GoogleMap googleMap) {
-//                            //init lat lng
-//
-//                            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-//                            //create marker
-//                            MarkerOptions options= new MarkerOptions().position(latLng).title("I am there");
-//                            //zoom Map
-//                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-//                            //add marker on map
-//                            googleMap.addMarker(options);
-//
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if(requestCode == 44 ){
-//            if(grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//                //when permission granted
-//                //call method
-//                getLocation();
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 44 ){
+            if(grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                //when permission granted
+                //call method
+                getCurrentLocation();
+            }
+        }
+    }
 
     public void resetTapped(View view)
     {
@@ -230,24 +229,5 @@ public class OutTrainActivity extends AppCompatActivity {
         return String.format("%02d",hours) + " : " + String.format("%02d",minutes) + " : " + String.format("%02d",seconds);
     }
 
-//    public void startChronometer(View view){
-//        if(!timerRunning){
-//            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-//            chronometer.start();
-//            timerRunning=true;
-//        }
-//    }
-//
-//    public void pauseChronometer(View view){
-//        if(timerRunning){
-//            chronometer.stop();
-//            pauseOffset=SystemClock.elapsedRealtime()-chronometer.getBase();
-//            timerRunning=false;
-//        }
-//    }
-//
-//    public void stopChronometer(View view){
-//        chronometer.setBase(SystemClock.elapsedRealtime());
-//        pauseOffset=0;
-//    }
+
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@android:color/transparent"
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical"
+    tools:context=".WaterActivity">
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_marginTop="150dp"
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:lottie_rawRes="@raw/wateranimation"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="0dp"
+        />
+
+    <TextView
+        android:id="@+id/glassCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="0 Glasses"
+        android:textSize="28sp"/>
+    <TextView
+        android:id="@+id/mlCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="0 ml"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/drinkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:padding="15dp"
+        android:text=" Drink "
+        android:textSize="20sp"
+        app:cornerRadius="15dp" />
+
+    <Button
+        android:id="@+id/decGlassBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/holo_blue_dark"
+        app:backgroundTint="@android:color/background_light"
+        android:text="-"
+        android:textSize="20sp"
+        app:cornerRadius="15dp"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp" />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="1 glass= 250ml"
+        android:textSize="20sp"/>
+
+
+
+</LinearLayout>

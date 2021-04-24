@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GoalsFragment"
+    android:layout_gravity="center_horizontal"
+    android:background="@android:color/transparent"
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/firstLine"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_centerVertical="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Goals"
+            android:layout_marginBottom="5dp"
+            android:textSize="22sp"
+            />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="left">
+
+                    <ImageView
+                        android:id="@+id/calories"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/iconfinder_game_of_thrones_game_thrones_series_element_fire_flame_heat_4527379" />
+
+                    <TextView
+                        android:id="@+id/caloriesTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/calories"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="Calories Burnt"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/caloriesGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/caloriesTxt"
+                        android:layout_marginLeft="65dp"
+                        android:text="0/200kcal"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="left">
+
+                    <ImageView
+                        android:id="@+id/weight"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/iconfinder_weight_fat_body_overweight_unhealthy_obesity_diet_health_belly_5859965" />
+
+                    <TextView
+                        android:id="@+id/kgTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toEndOf="@id/weight"
+                        android:text="Lose Weight"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:gravity="left">
+
+                    <ImageView
+                        android:id="@+id/waterGoalImg"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/iconfinder_weather_rain_water_drop_rainy_wet_liquid_4894533" />
+
+                    <TextView
+                        android:id="@+id/waterGoaltxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/waterGoalImg"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="Stay Hydrate"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/waterGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/waterGoaltxt"
+                        android:layout_marginLeft="65dp"
+                        android:text="0/2000ml"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:gravity="left">
+
+                    <ImageView
+                        android:id="@+id/exerciseGoalImg"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/iconfinder_13_route_map_pointer_location__destination_6442806" />
+
+                    <TextView
+                        android:id="@+id/exerciseGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/exerciseGoalImg"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="Run Forest, Run!"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/kmsGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exerciseGoal"
+                        android:layout_marginLeft="65dp"
+                        android:text="0/6kms"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</LinearLayout>

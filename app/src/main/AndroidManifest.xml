@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoFit">
-        <activity android:name=".OutTrainActivity"></activity>
+        <activity android:name=".WaterActivity"></activity>
+        <activity android:name=".OutTrainActivity" />
         <activity android:name=".BMICalculatorActivity" />
         <activity android:name=".ContactUsActivity" />
         <!--
@@ -30,7 +31,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-
         <activity android:name=".BiometricsActivity" />
         <activity android:name=".LaunchActivity">
             <intent-filter>
@@ -52,7 +52,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <uses-library android:name="com.google.android.maps"/>
+
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>
