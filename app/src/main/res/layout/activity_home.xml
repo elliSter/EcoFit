@@ -28,22 +28,22 @@
 
         >
 
-        <ImageView
-            android:id="@+id/coins"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignRight="@id/container"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
+<!--        <ImageView-->
+<!--            android:id="@+id/coins"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_alignRight="@id/container"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="10dp"-->
 
-            app:srcCompat="@drawable/money" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_toLeftOf="@id/coins"
-            android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:text="coins"/>
+<!--            app:srcCompat="@drawable/money" />-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_toLeftOf="@id/coins"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="coins"/>-->
 
         <ImageButton
             android:id="@+id/menuIcon"

@@ -14,4 +14,18 @@
     <color name="ecofitComplementary">#3300cc</color>
     <color name="gray">#e5e5e5</color>
     <color name="grayDarker">#262626</color>
+    <color name="babyBlue">#9573F1F1</color>
+    <color name="babyGreenn">#9C9FC770</color>
+    <color name="lemon">#A9F8D876</color>
+    <color name="redPastel">#A8FF3526</color>
+    <color name="orangee">#F6B093</color>
+    <color name="banana">#fff8de</color>
+    <color name="greenBlue">#1AB8A3</color>
+    <color name="greenBlueDark">#01554E</color>
+    <color name="lila">#a829cf</color>
+    <color name="yalazio">#48C5FF</color>
+    <color name="yellow">#FFEA2B</color>
+    <color name="pastelgreen">#A6DAC1</color>
+    <color name="pastellightblue">#8FC3D2</color>
+    <color name="pastellightgreen">#D0F3DA</color>
 </resources>
