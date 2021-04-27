@@ -1,6 +1,5 @@
 package com.example.ecofit;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,20 +9,30 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.time.Instant;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import io.grpc.internal.JsonUtil;
+import java.util.Calendar;
+
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -31,10 +40,20 @@ public class HomeFragment extends Fragment {
     private SensorManager sensorManager;
     private Sensor sensor;
     private ProgressBar progressBar;
-    private TextView steps,distance,calories,time;
+    private TextView steps,distance,calories,time,usersname;
     private double MagnitudePrevious = 0;
     private Integer stepCount = 0;
     private ImageButton waterBtn;
+
+    int caloriesInt=5;
+    int distanceInt=6;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
+    private  String userID,dis,calor;
+
+    private Calendar cal=Calendar.getInstance();
+    private int currentDate=cal.get(Calendar.DAY_OF_YEAR);
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,16 +91,18 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_home, container, false);
-
-        //start service
         getActivity().startService(new Intent(getActivity(),HomeFragment.class));
-        //requireActivity().startService(new Intent(getContext(), HomeFragment.class));
 
+        //database connection
+        db = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        usersname=(TextView)view.findViewById(R.id.usernameField);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         steps=(TextView)view.findViewById(R.id.steps);
         distance=(TextView)view.findViewById(R.id.distanceTxt);
         calories=(TextView)view.findViewById(R.id.caloriesTxt);
-        time=(TextView)view.findViewById(R.id.timeTxt);
+        time=(TextView)view.findViewById(R.id.weightLabel);
 
         //to start Water Activity
         waterBtn=(ImageButton)view.findViewById(R.id.water);
@@ -117,24 +138,14 @@ public class HomeFragment extends Fragment {
                     steps.setText(stepCount.toString());
 
                     //progress circle
-                    int progress=(int)( (stepCount/260)*100);
+                    int progress=(int)( ((double)stepCount / (double)1000)*100);
                     progressBar.setProgress(progress);
 
-                    //calculate distance in KMs (mpakalistika) around 75 cms per step
-                    float dis;
-                    dis=(float)(stepCount*75)/(float)100000;
-                    String disString=String.valueOf((new DecimalFormat("###.##").format(dis)));
-                    distance.setText(disString);
+                    distance.setText(calculateDistance(stepCount));
+                    calories.setText(calculateCalories(stepCount));
 
-                    //calories burnt, around 0.04 per step
-                    float cal;
-                    cal=(float)(stepCount*(0.04));
-                    String calString=String.valueOf((new DecimalFormat("####").format(cal)));
-                    calories.setText(calString);
-
-                    //time
-
-
+                    calor=calculateCalories(stepCount);
+                    caloriesInt=Integer.parseInt(calculateCalories(stepCount));
 
                 }
 
@@ -149,20 +160,56 @@ public class HomeFragment extends Fragment {
 
         sensorManager.registerListener(stepDetector,sensor,SensorManager.SENSOR_DELAY_NORMAL);
 
-        //show distance
-//        int stepsInt= Integer.parseInt(steps.toString());
-//        //float kms=getDistanceRun(stepsInt);
-//        String kmString=Float.toString(getDistanceRun(stepsInt));
-//        distance.setText(kmString);
+        //arxi
+        userID = firebaseAuth.getCurrentUser().getUid();
 
-        //Long stepsLong=Long.parseLong(steps.toString());
-        //String test=String.valueOf(getDistanceRun(80));
-        //distance.setText( test);
+        DocumentReference documentReferenceRecords = db.collection("Records").document(userID);
+//        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            //on success
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                DocumentSnapshot document = task.getResult();
+////                        if (value != null){
+////                            weight.setText(value.getDouble("Username"));
+////                          todo: add timestamp and check if is valid < 24 hours
+////                        }``
+//            }
+//            //on failure
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.w("ERROR","Error getting documents.",e);
+//            }
+//        });
 
+        //caloriesInt= Integer.parseInt(calculateCalories(stepCount));
+        //distanceInt= Integer.parseInt(calculateDistance(stepCount));
+        Map<String,Object> records = new HashMap<>();
+        records.put("Steps",stepCount);
+        records.put("Calories",caloriesInt);
+        records.put("Distance",distanceInt);
 
+        documentReferenceRecords.set(records);
+//telos
         return view;
 
     }
+
+    //calculate distance in KMs  around 75 cms per step, 78 for men, 70 for women
+    private String calculateDistance(int stepCount){
+        float dis;
+        dis=(float)(stepCount*75)/(float)100000;
+        String disString=(new DecimalFormat("###.##").format(dis));
+        return disString;
+    }
+
+    //calories burned, around 0.04 per step
+    private String calculateCalories(int stepCount){
+        float cal=(float)(stepCount*(0.04));
+        String calString=String.valueOf((new DecimalFormat("####").format(cal)));
+        return calString;
+    }
+
 
     public void onPause() {
         super.onPause();
@@ -191,10 +238,4 @@ public class HomeFragment extends Fragment {
         stepCount = sharedPreferences.getInt("stepCount", 0);
     }
 
-    //function to determine the distance run in kilometers using average step length for men and number of steps
-    public float getDistanceRun(long steps){
-        //---------78 for men, 70 for women
-        float distance = (float)(steps*78)/(float)100000;
-        return distance;
-    }
 }
